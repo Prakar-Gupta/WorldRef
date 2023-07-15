@@ -9,11 +9,13 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import OfflineShareIcon from '@mui/icons-material/OfflineShare';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import './landingpage.css'
 import { useEffect } from 'react';
 import { UserAuth } from '../firebase/auth';
 function LandingPage() {
+    const navigate = useNavigate()
     const { user } = UserAuth()
     const PlusIcon = createSvgIcon(
         // credit: plus icon from https://heroicons.com/
@@ -28,6 +30,18 @@ function LandingPage() {
         </svg>,
         'Plus',
     );
+    const handleClick = () => {
+        if (localStorage.getItem('login')) {
+            navigate('https://en.wikipedia.org/wiki/Main_Page')
+        }
+        else {
+            window.alert('You must login/signup first')
+        }
+    }
+    const logout = () => {
+        localStorage.clear()
+        navigate('/login')
+    }
     return (
         <>
             <div className='header'>
@@ -42,6 +56,13 @@ function LandingPage() {
                 </li>
 
             </div>
+            {localStorage.getItem('login') ? (
+                <div style={{ margin: '25px 100px -40px 100px' }}>
+                    <Button variant='contained' onClick={logout}>Log Out</Button>
+                </div>
+            ) : (
+                null
+            )}
             <div style={{ margin: '50px 100px 35px 100px', alignItems: 'center' }}>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <h2>Requests for Quotation</h2>
@@ -56,7 +77,7 @@ function LandingPage() {
             </div>
             <div style={{ margin: '20px 100px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <p style={{ fontWeight: 'bold' }}><span id='highlight'>1008</span> Buying Requests from 500 buyers</p>
-                <Button id='update_btn' variant='outlined' style={{ gap: '7px' }}>
+                <Button id='update_btn' variant='outlined' style={{ gap: '7px' }} onClick={handleClick}>
                     <PlusIcon />
                     <span>Update Preferences</span></Button>
             </div>
@@ -67,14 +88,18 @@ function LandingPage() {
                     All
                 </div>
 
-                {user ? (
-                    <Button style={{ textTransform: 'capitalize' }} variant="contained">Login/Signup</Button>
-                ) : (
+                {(localStorage.getItem('login')) ? (
                     <div>
                         <Radio />
                         RFQs Matching My Preferences
+                        {console.log(user)}
                     </div>
-                )}
+                ) : (
+                    <Button style={{ textTransform: 'capitalize' }} variant="contained" onClick={(() => {
+                        navigate('/login')
+                    })} >Login/Signup</Button>
+                )
+                }
             </div>
             <Box sx={{ display: 'grid', gridTemplateColumns: '80% 20%', margin: '20px 100px', height: '300px' }}>
                 <Box sx={{}}>
@@ -156,8 +181,8 @@ function LandingPage() {
                             borderBottomRightRadius: 10,
                             height: '75.5%',
                         }}>
-                        <Button className='card_btn' variant="contained"><p>Add to my deals</p></Button>
-                        <Button className='card_btn' variant="outlined"><p>Check Details</p></Button>
+                        <Button className='card_btn' variant="contained" onClick={handleClick}><p>Add to my deals</p></Button>
+                        <Button className='card_btn' variant="outlined" onClick={handleClick}><p>Check Details</p></Button>
                     </Box>
                 </Box>
             </Box>
@@ -241,8 +266,8 @@ function LandingPage() {
                             borderBottomRightRadius: 10,
                             height: '75.5%',
                         }}>
-                        <Button className='card_btn' variant="contained"><p>Add to my deals</p></Button>
-                        <Button className='card_btn' variant="outlined"><p>Check Details</p></Button>
+                        <Button className='card_btn' variant="contained" onClick={handleClick}><p>Add to my deals</p></Button>
+                        <Button className='card_btn' variant="outlined" onClick={handleClick}><p>Check Details</p></Button>
                     </Box>
                 </Box>
             </Box>
@@ -326,8 +351,8 @@ function LandingPage() {
                             borderBottomRightRadius: 10,
                             height: '75.5%',
                         }}>
-                        <Button className='card_btn' variant="contained"><p>Add to my deals</p></Button>
-                        <Button className='card_btn' variant="outlined"><p>Check Details</p></Button>
+                        <Button className='card_btn' variant="contained" onClick={handleClick}><p>Add to my deals</p></Button>
+                        <Button className='card_btn' variant="outlined" onClick={handleClick}><p>Check Details</p></Button>
                     </Box>
                 </Box>
             </Box>
@@ -337,9 +362,3 @@ function LandingPage() {
 }
 
 export default LandingPage
-
-// export default function dash() {
-//     return (
-//         <h1>This is dashboard</h1>
-//     )
-// }

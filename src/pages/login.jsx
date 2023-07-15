@@ -26,10 +26,12 @@ function Login() {
         setError('')
         try {
             await signIn(email, password)
+            localStorage.setItem('login', true);
             navigate('/')
         } catch (e) {
             setError(e.message)
             console.log(e.message)
+            window.alert('Invalid Email/Password')
         }
     };
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,21 +10,22 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { UserAuth, auth } from '../firebase/auth';
+import { UserAuth } from '../firebase/auth';
 
 function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('')
-    const { createUser } = UserAuth
-    const navigate = useNavigate()
+    const { createUser } = UserAuth();
+    const navigate = useNavigate();
 
     const signUp = async (e) => {
         e.preventDefault();
         setError('');
         try {
             await createUser(email, password);
-            navigate('/account')
+            localStorage.setItem('login', true)
+            navigate('/')
         } catch (e) {
             setError(e.message);
             console.log(e.message);
