@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#highlight {
+    color: blue;
+}
+
+#update_btn {
+    margin-left: auto;
+    display: flex;
+    gap: 5px;
+    text-transform: capitalize;
+}
+
+#space {
+    margin-left: 120px;
+}
+
+#live {
+    background-color: blue;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 3px 15px;
+    border: transparent;
+    border-radius: 15px;
+    color: white;
+}
+
+#description {
+    margin-right: 20px;
+    line-height: 1.5;
+}
+
+.card_btn {
+    width: 150px;
+    text-transform: lowercase;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.card_btn p {
+    text-transform: capitalize;
+}
